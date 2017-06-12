@@ -22,16 +22,15 @@ LocalizationManager::LocalizationManager(const OccupancyGrid &ogrid, Hamster *ha
  */
 void LocalizationManager::getRandomLocation(Particle *particle) {
 	do {
+		particle->loc->setJ(rand() % ogrid.getWidth());
+		particle->loc->setI(rand() % ogrid.getHeight());
 
-		particle->loc.setJ(rand() % ogrid.getWidth());
-		particle->loc.setI(rand() % ogrid.getHeight());
+	}while (ogrid.getCell(particle->loc->getJ(), particle->loc->getI()) != CELL_FREE);
 
-	}while (ogrid.getCell(particle->loc.getJ(), particle->loc.getI()) != CELL_FREE);
+	particle->loc->setX((particle->loc->getJ() - (double)ogrid.getWidth() / 2) * ogrid.getResolution());
+	particle->loc->setY(((double)ogrid.getHeight() / 2 - particle->loc->getI()) * ogrid.getResolution());
 
-	particle->loc.setX((particle->loc.getJ() - (double)ogrid.getWidth() / 2) * ogrid.getResolution());
-	particle->loc.setY(((double)ogrid.getHeight() / 2 - particle->loc.getI()) * ogrid.getResolution());
-
-	particle->loc.setYaw(rand() % 360);
+	particle->loc->setYaw(rand() % 360);
 }
 /*
  * Params:none
@@ -75,6 +74,7 @@ double LocalizationManager::computeBelief(Particle *particle) {
 			}
 		}
 	}
+
 	return ((double)hits / (hits + misses))*1.2;
 }
 /*
@@ -86,18 +86,18 @@ void LocalizationManager::updateParticles(double deltaX, double deltaY, double d
 	for (int i = 0; i < particles.size(); i++) {
 		Particle *particle = particles[i];
 
-		particle->loc.setX(particle->loc.getX() + deltaX);
-		particle->loc.setY(particle->loc.getY() + deltaY);
-		particle->loc.setYaw(particle->loc.getYaw() + deltaYaw);
+		particle->loc->setX(particle->loc->getX() + deltaX);
+		particle->loc->setY(particle->loc->getY() + deltaY);
+		particle->loc->setYaw(particle->loc->getYaw() + deltaYaw);
 
-		particle->loc.setI(particle->loc.getY() / ogrid.getResolution() + ogrid.getHeight() / 2);
-		particle->loc.setJ(particle->loc.getYaw() / ogrid.getResolution() + ogrid.getWidth() / 2);
+		particle->loc->setI(particle->loc->getY() / ogrid.getResolution() + ogrid.getHeight() / 2);
+		particle->loc->setJ(particle->loc->getYaw() / ogrid.getResolution() + ogrid.getWidth() / 2);
 
-		if(particle->loc.getI() == 401 || particle->loc.getJ() == 419) createChildParticle(particle);
+		if(particle->loc->getI() == 401 || particle->loc->getJ() == 419) createChildParticle(particle);
 
 		particle->belief = computeBelief(particle);
 	}
-
+	HamsterAPI::Log::i("Client", "start sort");
 	sort(particles.begin(),particles.end(),wayToSort);
 
 	int newIndex = AMOUNT_TO_KEEP;
@@ -106,7 +106,7 @@ void LocalizationManager::updateParticles(double deltaX, double deltaY, double d
 		createChildParticle(particles[newIndex]);
 		newIndex++;
 	}
-	//cout << "after add particles.size(): "<<particles.size() << endl;
+	cout << "after add particles.size(): "<<particles.size() << endl;
 }
 
 /*
@@ -126,18 +126,18 @@ void LocalizationManager::createChildParticle(Particle* oneParticle){
 		oneParticle->jx = oneParticle->x / ogrid.getResolution() + ogrid.getWidth() / 2;*/
 
 	do {
-		oneParticle->loc.setI(((rand() % 30) - 15 + goodParticle->loc.getI()) % ogrid.getHeight());
-		oneParticle->loc.setJ(((rand() % 30) - 15 + goodParticle->loc.getJ()) % ogrid.getWidth());
+		oneParticle->loc->setI(((rand() % 30) - 15 + goodParticle->loc->getI()) % ogrid.getHeight());
+		oneParticle->loc->setJ(((rand() % 30) - 15 + goodParticle->loc->getJ()) % ogrid.getWidth());
 		//cout << "in do while: new: " << oneParticle->iy << " , " << oneParticle->jx << "old: " << goodParticle->iy << " , " << goodParticle->jx << " , "<<goodParticle->belief<< endl;
-	} while (ogrid.getCell(oneParticle->loc.getJ(),oneParticle->loc.getI()) != CELL_FREE);
+	} while (ogrid.getCell(oneParticle->loc->getJ(),oneParticle->loc->getI()) != CELL_FREE);
 
-	oneParticle->loc.setX((oneParticle->loc.getJ() - (double)ogrid.getWidth() / 2) * ogrid.getResolution());
-	oneParticle->loc.setY(((double)ogrid.getHeight() / 2 - oneParticle->loc.getI()) * ogrid.getResolution());
+	oneParticle->loc->setX((oneParticle->loc->getJ() - (double)ogrid.getWidth() / 2) * ogrid.getResolution());
+	oneParticle->loc->setY(((double)ogrid.getHeight() / 2 - oneParticle->loc->getI()) * ogrid.getResolution());
 
-	int y = (rand() % 10) - 5 + goodParticle->loc.getYaw();
+	int y = (rand() % 10) - 5 + goodParticle->loc->getYaw();
 	if(y < 0) y += 360;
 
-	oneParticle->loc.setYaw(y % 360);
+	oneParticle->loc->setYaw(y % 360);
 }
 /*
  * Params:none
@@ -146,7 +146,7 @@ void LocalizationManager::createChildParticle(Particle* oneParticle){
 void LocalizationManager::printParticles() const {
 	for (int i = 0; i < particles.size(); i++) {
 		Particle *particle = particles[i];
-		cout << "Particle " << i << ": " << particle->loc.getI() << "," << particle->loc.getJ() << "," << particle->loc.getYaw() << ", belief: " << particle->belief << endl;
+		cout << "Particle " << i << ": " << particle->loc->getI() << "," << particle->loc->getJ() << "," << particle->loc->getYaw() << ", belief: " << particle->belief << endl;
 	}
 }
 /*

@@ -11,7 +11,7 @@
 
 class Particle {
 public:
-	Location loc;
+	Location* loc;
 	double belief;
 };
 

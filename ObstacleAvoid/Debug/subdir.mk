@@ -4,12 +4,30 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Calculations.cpp \
+../LocalizationManager.cpp \
+../Location.cpp \
+../Map.cpp \
+../RandomWalk.cpp \
+../Robot.cpp \
 ../main.cpp 
 
 OBJS += \
+./Calculations.o \
+./LocalizationManager.o \
+./Location.o \
+./Map.o \
+./RandomWalk.o \
+./Robot.o \
 ./main.o 
 
 CPP_DEPS += \
+./Calculations.d \
+./LocalizationManager.d \
+./Location.d \
+./Map.d \
+./RandomWalk.d \
+./Robot.d \
 ./main.d 
 
 

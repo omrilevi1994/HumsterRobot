@@ -46,19 +46,21 @@ void Map::initializeMap() {
 void Map::drawParticles(vector<Particle *> particles) {
 	initializeMap();
 	for(int i = 0; i < 5; i++){
-		mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[0] = 0;
-		mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[1] = 128;
-		mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[2] = 0;
+		Location* loc = particles[i]->loc;
+		mat.at<Vec3b>(loc->getI(), loc->getJ())[0] = 0;
+		mat.at<Vec3b>(loc->getI(), loc->getJ())[1] = 128;
+		mat.at<Vec3b>(loc->getI(), loc->getJ())[2] = 0;
 	}
 	for (int i = 5; i < particles.size(); i++) {
+		Location* loc = particles[i]->loc;
 		if(particles[i]->belief > HIGH_BELIEF){
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[0] = 255;
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[1] = 0;
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[2] = 0;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[0] = 255;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[1] = 0;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[2] = 0;
 		}else{
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[0] = 0;
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[1] = 0;
-			mat.at<Vec3b>(particles[i]->loc.getI(), particles[i]->loc.getJ())[2] = 255;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[0] = 0;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[1] = 0;
+			mat.at<Vec3b>(loc->getI(), loc->getJ())[2] = 255;
 		}
 	}
 }
