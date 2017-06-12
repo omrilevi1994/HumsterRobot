@@ -1,31 +1,21 @@
 /*
  * RandomWalk.h
  *
- *  Created on: Mar 9, 2017
+ *  Created on: Jan 28, 2017
  *      Author: user
  */
 
 #ifndef RANDOMWALK_H_
 #define RANDOMWALK_H_
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "HamsterAPIClientCPP/Hamster.h"
-#include <time.h>
-
+#include <HamsterAPIClientCPP/Hamster.h>
+#include <iostream>
+using namespace HamsterAPI;
 using namespace std;
-
 class RandomWalk {
-
 private:
-	HamsterAPI::Hamster * hamster;
-
+	Hamster* hamster;
 public:
-	RandomWalk(HamsterAPI::Hamster * hamster);
-	double getNearestObstacleDistanceForword(HamsterAPI::LidarScan scan, int span);
-	double getNearestObstacleDistanceLeft(HamsterAPI::LidarScan scan, int span);
-	double getNearestObstacleDistanceRight(HamsterAPI::LidarScan scan, int span);
-	void obstacleAvoidence(HamsterAPI::Hamster* hamster);
+	RandomWalk(Hamster *hamster);
 	void getScansBetween(double min, double max, std::vector<double> & distances);
 	bool willCollide(std::vector<double> distances, int angle_from_center);
 	bool isFrontFree();
@@ -33,10 +23,13 @@ public:
 	bool isRightFree();
 	bool isBackFree();
 	void moveForward();
-	void turnLeft() ;
+	void turnLeft();
 	void turnRight();
+	void turnLeft(int angle);
+	void turnRight(int angle);
 	void moveBackwards();
-	void stopMoving() ;
+	void stopMoving();
+	int closestAngle(int maxAngle);
 	virtual ~RandomWalk();
 };
 

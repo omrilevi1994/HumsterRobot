@@ -1,60 +1,45 @@
 /*
  * LocalizationManager.h
  *
- *  Created on: Jan 24, 2017
- *      Author: user
  */
 
 #ifndef LOCALIZATIONMANAGER_H_
 #define LOCALIZATIONMANAGER_H_
-#include "Particle.h"
-#include "HamsterAPIClientCPP/Hamster.h"
-#include <iostream>
 
-#include "ColoredMap.h"
-#define COPY_TH 0.16
-#define REMOVE_TH 0.15
-#define NEW_TH 0.2
-#define NORMAL 1.2
+#include "Particle.h"
+#include <vector>
+#include <HamsterAPIClientCPP/Hamster.h>
+#include "Map.h"
+#include <fstream>
+#include <iostream>
 using namespace std;
 using namespace HamsterAPI;
 
-
 class LocalizationManager {
 private:
-	ColoredMap* map;
-	vector<Particle*> particleVector;
-	vector<Particle*> mergeVector;
-	double avg=0.0;
+	const OccupancyGrid &ogrid;
+	Hamster *hamster;
+	Map &map;
+	void getRandomLocation(Particle *particle);
+	double computeBelief(Particle *particle);
 
 public:
-	LocalizationManager(ColoredMap* map);
+	vector<Particle *> particles;
+	LocalizationManager(const OccupancyGrid &ogrid, Hamster *hamster, Map &map);
+	void initParticles();
+	void updateParticles(double deltaX, double deltaY, double deltaYaw);
+	void createChildParticle(Particle* oneParticle);
+	double sumOfBelief(int amount);
+	Particle* rouletteWheelAlgorithm(int particles_num);
+	void printParticles() const;
 
-	void initParticles(int amount);
+	vector<Particle *> getParticles() const;
 
-	void deleteParticle(int index);
-
-	void filterParticles();
-
-	void dupeParticle(Particle* particle);
-
-	void mergeDupes();
-
-	void createRandomParticle();
-
-	void createParticle(double x,double y,int yaw,double bel);
-
-	void getTop(int howmuch);
-	void calcAvg();
-	//bool comparePtrToNode(Particle* a, Particle* b) ;
-
-	void updateParticles(HamsterAPI::LidarScan scan);
-
-	double computeBelief(HamsterAPI::LidarScan scan,Particle* particle);
-	void printParticles();
-
-	void paintParticleVector();
 	virtual ~LocalizationManager();
+
+	struct wayToSort {
+		bool operator()(Particle* i,Particle* j) { return i->belief > j->belief; }
+	}wayToSort;
 };
 
 #endif /* LOCALIZATIONMANAGER_H_ */
