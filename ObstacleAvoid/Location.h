@@ -22,24 +22,24 @@ public:
 		return x;
 	}
 
-	void setX(double x) {
-		this->x = x;
+	void setX(double x1) {
+		x = x1;
 	}
 
 	double getY() const {
 		return y;
 	}
 
-	void setY(double y) {
-		this->y = y;
+	void setY(double y1) {
+		y = y1;
 	}
 
 	int getYaw() const {
 		return yaw;
 	}
 
-	void setYaw(int yaw) {
-		this->yaw = yaw;
+	void setYaw(int yaw1) {
+		yaw = yaw1;
 	}
 
 	void print();
@@ -48,16 +48,16 @@ public:
 		return i;
 	}
 
-	void setI(int i) {
-		this->i = i;
+	void setI(int i1) {
+		i = i1;
 	}
 
 	int getJ() const {
 		return j;
 	}
 
-	void setJ(int j) {
-		this->j = j;
+	void setJ(int j1) {
+		j = j1;
 	}
 };
 
