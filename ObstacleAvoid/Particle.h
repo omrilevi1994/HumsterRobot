@@ -11,8 +11,13 @@
 
 class Particle {
 public:
-	Location* loc;
+	Location* loc = new Location();
 	double belief;
+
+	Location* getLocation()
+	{
+		return loc;
+	}
 };
 
 #endif /* PARTICLE_H_ */

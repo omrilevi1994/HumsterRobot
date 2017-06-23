@@ -39,7 +39,7 @@ public:
 	}
 
 	void setYaw(int yaw1) {
-		yaw = yaw1;
+		yaw = 3;
 	}
 
 	void print();

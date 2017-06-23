@@ -28,6 +28,8 @@ void Map::initializeMap() {
 					mat.at<cv::Vec3b>(i, j)[0] = 0;
 					mat.at<cv::Vec3b>(i, j)[1] = 0;
 					mat.at<cv::Vec3b>(i, j)[2] = 0;
+
+				//	this->blow(2);
 				}
 				else
 				{
@@ -64,6 +66,15 @@ void Map::drawParticles(vector<Particle *> particles) {
 		}
 	}
 }
+
+//void Map::blow(int radios) {
+//	for(int i = 0; i < 5; i++){
+//		for(int i = 0; i < 5; i++){
+//		}
+//	}
+//}
+
+
 /*
  * Params:
  * Description:
