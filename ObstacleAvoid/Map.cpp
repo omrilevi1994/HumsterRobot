@@ -5,7 +5,7 @@
 
 #include "Map.h"
 #define HIGH_BELIEF 0.25
-Map::Map(OccupancyGrid &ogrid) : ogrid(ogrid),mat(ogrid.getWidth(), ogrid.getHeight(), CV_8UC3, cv::Scalar(255, 255, 255)){
+Map::Map(OccupancyGrid &ogrid) : ogrid(ogrid),mat(ogrid.getWidth()),inflateMat(ogrid.getWidth()), ogrid.getHeight(), CV_8UC3, cv::Scalar(255, 255, 255)){
 	namedWindow("Map");
 }
 /*
@@ -29,7 +29,6 @@ void Map::initializeMap() {
 					mat.at<cv::Vec3b>(i, j)[1] = 0;
 					mat.at<cv::Vec3b>(i, j)[2] = 0;
 
-				//	this->blow(2);
 				}
 				else
 				{
@@ -46,7 +45,7 @@ void Map::initializeMap() {
  * Description:draw the Particles in the map
  */
 void Map::drawParticles(vector<Particle *> particles) {
-	initializeMap();
+	//initializeMap();
 	for(int i = 0; i < 5; i++){
 		Location* loc = particles[i]->loc;
 		mat.at<Vec3b>(loc->getI(), loc->getJ())[0] = 0;
@@ -67,12 +66,21 @@ void Map::drawParticles(vector<Particle *> particles) {
 	}
 }
 
-//void Map::blow(int radios) {
-//	for(int i = 0; i < 5; i++){
-//		for(int i = 0; i < 5; i++){
-//		}
-//	}
-//}
+void Map::inflateMatrix(int i, int j) {
+	 int robotHeightInPixel = robotHeight / resolustion;
+	 int robotWidthInPixel = robotWidth / resolustion;
+	 int robotSize = max(robotHeightInPixel,robotWidthInPixel);
+
+	 int inflationRadios = 1.2 * robotSize;
+
+	for(int p = i-inflationRadios; p <= i+inflationRadios; p++){
+			for(int q = j-inflationRadios; j <= j+inflationRadios; q++){
+				inflateMat.at<cv::Vec3b>(p, q)[0] = 0;
+				inflateMat.at<cv::Vec3b>(p, q)[1] = 0;
+				inflateMat.at<cv::Vec3b>(p, q)[2] = 0;
+		}
+	}
+}
 
 
 /*
