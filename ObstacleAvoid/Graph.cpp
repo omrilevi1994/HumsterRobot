@@ -1,9 +1,3 @@
-/*
- * Graph.cpp
- *
- *  Created on: Mar 29, 2016
- *      Author: colman
- */
 
 #include "Graph.h"
 
@@ -21,7 +15,7 @@ void Graph::buildGraphFromMap(const Map map)
 	this->resolutionRelation = graphResolutionInCM / map.resolustion();
 	int graphRows = map.height() * map.resolustion() / graphResolutionInCM;
 	int graphColumns = map.width() * map.resolustion() / graphResolutionInCM;
-	bool isCellOcupied;
+	bool isMatCellOcupied;
 
 	this->nodes.resize(graphRows);
 
@@ -36,31 +30,31 @@ void Graph::buildGraphFromMap(const Map map)
 	{
 		for (int col = 0; col < graphColumns; col ++)
 		{
-			isCellOcupied = false;
-			for (int i = (row * resolutionRelation) ; (i < (row * resolutionRelation) + resolutionRelation) && (!isCellOcupied); i++)
+			isMatCellOcupied = false;
+			for (int i = (row * resolutionRelation) ; (i < (row * resolutionRelation) + resolutionRelation) && (!isMatCellOcupied); i++)
 			{
-				for (int j = (col * resolutionRelation); (j < (col * resolutionRelation) + resolutionRelation) && (!isCellOcupied); j++)
+				for (int j = (col * resolutionRelation); (j < (col * resolutionRelation) + resolutionRelation) && (!isMatCellOcupied); j++)
 				{
 					current.y = i;
 					current.x = j;
-					isCellOcupied = map.checkIfInflotedMapCellIsOccupied(current);
+					isMatCellOcupied = map.InflateMatCellIsOccupied(current);
 				}
 			}
 
-			this->nodes[row][col].occupied = isCellOcupied;
+			this->nodes[row][col].occupied = isMatCellOcupied;
 		}
 	}
 }
 
-Cell Graph::getCellFromPoint(Point point)
+MatCell Graph::getCellFromPoint(Point point)
 {
 	int row = point.y / resolutionRelation;
 	int col = point.x / resolutionRelation;
-	Cell cell(row,col);
-	return cell;
+	MatCell MatCell(row,col);
+	return MatCell;
 }
 
-void Graph::paintPathOnMap(Map *map, vector<Cell> path, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, vector<MatCell> path, int r, int g, int b)
 {
 	for (int pathIndex = 0; pathIndex < path.size(); pathIndex++)
 	{
@@ -68,7 +62,7 @@ void Graph::paintPathOnMap(Map *map, vector<Cell> path, int r, int g, int b)
 	}
 }
 
-void Graph::paintPathOnMap(Map *map, Cell point, int r, int g, int b)
+void Graph::paintPathOnMap(Map *map, MatCell point, int r, int g, int b)
 {
 	Point current;
 
@@ -83,11 +77,11 @@ void Graph::paintPathOnMap(Map *map, Cell point, int r, int g, int b)
 	}
 }
 
-Point Graph::getPointFromCell(Cell cell)
+Point Graph::getPointFromCell(MatCell MatCell)
 {
 	Point point;
-	point.y = (cell.row * resolutionRelation) + (resolutionRelation / 2);
-	point.x = (cell.col * resolutionRelation) + (resolutionRelation / 2);
+	point.y = (MatCell.row * resolutionRelation) + (resolutionRelation / 2);
+	point.x = (MatCell.col * resolutionRelation) + (resolutionRelation / 2);
 
 	return (point);
 }

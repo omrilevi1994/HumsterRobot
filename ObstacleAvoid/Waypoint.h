@@ -9,17 +9,17 @@
 #define WAYPOINT_H_
 #include "limits.h"
 #include "Map.h"
-#include "Cell.h"
+#include "MatCell.h"
 
 class Waypoint {
 public:
-	Cell point;
+	MatCell point;
 	int yaw;
 
 	Waypoint();
-	Waypoint(Cell point, int yaw);
+	Waypoint(MatCell point, int yaw);
 
-	void operator()(Cell point, int yaw)
+	void operator()(MatCell point, int yaw)
 	{
 		this->point = point;
 		this->yaw = yaw;

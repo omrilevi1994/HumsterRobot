@@ -14,8 +14,9 @@ using namespace std;
 class RandomWalk {
 private:
 	Hamster* hamster;
+	WaypointManager* wpManager;
 public:
-	RandomWalk(Hamster *hamster);
+	RandomWalk(Hamster *hamster ,WaypointManager *wpManager);
 	void getScansBetween(double min, double max, std::vector<double> & distances);
 	bool willCollide(std::vector<double> distances, int angle_from_center);
 	bool isFrontFree();

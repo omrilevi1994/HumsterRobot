@@ -34,11 +34,11 @@ int main(int argc, char ** argv){
 
 			// Change the cel name to not the enum of the api.
 
-			Cell start = graph.getCellFromPoint(config.robotStart);
-			Cell goal = graph.getCellFromPoint(config.goal);
+			MatCell start = graph.getCellFromPoint(config.robotStart);
+			MatCell goal = graph.getCellFromPoint(config.goal);
 
 			AStarAlgorithm algo (graph.nodes,start,goal);
-			vector<Cell> path = algo.StartAlgorithm();
+			vector<MatCell> path = algo.StartAlgorithm();
 			graph.paintPathOnMap(&map,path,255,0,0); // Change.
 
 
@@ -54,6 +54,20 @@ int main(int argc, char ** argv){
 
 
 			// run over all the waypoints and if is connected goto....
+
+			Waypoint waypoint;
+
+			RandomWalk randomWalk = new RandomWalk(hamster);
+			for(int i=1; i<wp.waypoints.size(); i++){
+				map.showMap();
+				waypoint = wp.waypoints[i];
+				wp.setNextWaypoint(waypoint);
+
+
+				locManager.updateParticles(robot.getDeltaX(), robot.getDeltaY(), robot.getDeltaYaw());
+				locManager.printParticles();
+				map.drawParticles(locManager.getParticles());
+			}
 
 
 			while (hamster->isConnected()) {

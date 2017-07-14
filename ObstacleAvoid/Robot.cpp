@@ -7,8 +7,9 @@
 
 #include "Robot.h"
 
-Robot::Robot(Hamster *hamster) :hamster(hamster), prevLocation(0,0,0), currLocation(0,0,0) {
+Robot::Robot(Hamster *hamster,WaypointManager *wpManager) :hamster(hamster), prevLocation(0,0,0), currLocation(0,0,0) {
 	// TODO Auto-generated constructor stub
+	this->wpManager = wpManager;
 	updatePose();
 }
 /*
@@ -53,6 +54,19 @@ void Robot::updatePose() {
  */
 void Robot::printRobotPosition(){
 	cout << "Robot X: " << currLocation.getX() << "Robot Y: " << currLocation.getY() << "Robot YAW: " << currLocation.getYaw() << endl;
+}
+
+void Robot::goToWayPoint(int yaw){
+	while (!wpManager->isNearWaypoint(currLocation.x,currLocation.y,yaw)){
+		hamster->sendSpeed(0.1,0);
+	}
+
+	while (!wpManager->isInWaypoint(currLocation.x,currLocation.y,yaw)){
+			hamster->sendSpeed(0.05,0);
+	}
+
+	hamster->sendSpeed(0,0);
+
 }
 
 Robot::~Robot() {

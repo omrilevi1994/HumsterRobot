@@ -1,5 +1,5 @@
 /*
- * Cell.h
+ * MatCell.h
  *
  *  Created on: Jun 3, 2016
  *      Author: colman
@@ -9,38 +9,38 @@
 #define POINT_H_
 #include "limits.h"
 
-class Cell {
+class MatCell {
 public:
 	int row;
 	int col;
 
-	Cell();
-	Cell(int row, int col);
+	MatCell();
+	MatCell(int row, int col);
 
 	void operator()(int col, int row)
 	{
 		this->col = col;
 		this->row = row;
 	}
-	bool operator<(const Cell& point) const
+	bool operator<(const MatCell& point) const
 	{
 		return (row*INT_MAX + col < point.row*INT_MAX + point.col);
 	}
-	void operator=(const Cell& point)
+	void operator=(const MatCell& point)
 	{
 		this->col = point.col;
 		this->row = point.row;
 	}
-	bool operator==(const Cell& point) const
+	bool operator==(const MatCell& point) const
 	{
 		return (this->col == point.col && this->row == point.row);
 	}
-	bool operator!=(const Cell& point) const
+	bool operator!=(const MatCell& point) const
 	{
 		return (this->col != point.col || this->row != point.row);
 	}
 
-	virtual ~Cell();
+	virtual ~MatCell();
 };
 
 #endif /* POINT_H_ */

@@ -20,14 +20,16 @@ private:
 	Location currLocation;
 	Location prevLocation;
 	Hamster *hamster;
+	WaypointManager *wpManager;
 
 public:
-	Robot(Hamster *hamster);
+	Robot(Hamster *hamster,WaypointManager *wpManager);
 	double getDeltaX() const;
 	double getDeltaY() const;
 	double getDeltaYaw() const;
 	void updatePose();
 	void printRobotPosition();
+	void goToWayPoint(int yaw);
 	virtual ~Robot();
 };
 

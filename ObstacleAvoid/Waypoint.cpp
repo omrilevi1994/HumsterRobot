@@ -14,7 +14,7 @@ Waypoint::Waypoint() {
 	this->yaw = -999;
 }
 
-Waypoint::Waypoint(Cell point, int yaw)
+Waypoint::Waypoint(MatCell point, int yaw)
 {
 	this->point = point;
 	this->yaw = yaw;

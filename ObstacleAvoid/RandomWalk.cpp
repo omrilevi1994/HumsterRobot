@@ -7,7 +7,9 @@
 
 #include "RandomWalk.h"
 
-RandomWalk::RandomWalk(Hamster *hamster): hamster(hamster) {}
+RandomWalk::RandomWalk(Hamster *hamster,WaypointManager *wpManager): hamster(hamster){
+	this->wpManager = wpManager;
+}
 
 
 void RandomWalk::getScansBetween(double min, double max, std::vector<double> & distances) {
@@ -145,6 +147,11 @@ int RandomWalk::closestAngle(int maxAngle){
 		}
 	}
 	return -1;
+}
+
+void RandomWalk::goToWayPoint(int yaw){
+
+
 }
 
 RandomWalk::~RandomWalk() {

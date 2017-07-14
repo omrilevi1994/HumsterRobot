@@ -11,8 +11,9 @@
 #include <set>
 #include "Graph.h"
 #include "math.h"
+
+#include "MatCell.h"
 #include "Waypoint.h"
-#include "Cell.h"
 
 using namespace std;
 #include <iostream>

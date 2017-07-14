@@ -21,19 +21,23 @@ public:
 	int resolustion;
 	int robotHeight;
 	int robotWidth;
-	int height=ogrid.getHeight();
-	int width=ogrid.getWidth();
+	int height;
+	int width;
 
 	Map(OccupancyGrid &ogrid, int mapResolutionCM,int robotHeight1, int robotWidth1){
+		this->ogrid = ogrid;
 		resolustion = mapResolutionCM;
 		robotHeight = robotHeight1;
 		robotWidth = robotWidth1;
+		height = ogrid.getHeight();
+		width = ogrid.getWidth();
 	}
 	void initializeMap();
 	void initMap();
 	void drawParticles(vector<Particle *> particles);
 	void showMap();
 	void inflateMatrix(int i, int j) ;
+	bool InflateMatCellIsOccupied(Point point);
 	virtual ~Map();
 };
 

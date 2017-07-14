@@ -6,12 +6,12 @@
 CPP_SRCS += \
 ../AStarAlgorithm.cpp \
 ../Calculations.cpp \
-../Cell.cpp \
 ../ConfigurationManager.cpp \
 ../Graph.cpp \
 ../LocalizationManager.cpp \
 ../Location.cpp \
 ../Map.cpp \
+../MatCell.cpp \
 ../RandomWalk.cpp \
 ../Robot.cpp \
 ../Waypoint.cpp \
@@ -21,12 +21,12 @@ CPP_SRCS += \
 OBJS += \
 ./AStarAlgorithm.o \
 ./Calculations.o \
-./Cell.o \
 ./ConfigurationManager.o \
 ./Graph.o \
 ./LocalizationManager.o \
 ./Location.o \
 ./Map.o \
+./MatCell.o \
 ./RandomWalk.o \
 ./Robot.o \
 ./Waypoint.o \
@@ -36,12 +36,12 @@ OBJS += \
 CPP_DEPS += \
 ./AStarAlgorithm.d \
 ./Calculations.d \
-./Cell.d \
 ./ConfigurationManager.d \
 ./Graph.d \
 ./LocalizationManager.d \
 ./Location.d \
 ./Map.d \
+./MatCell.d \
 ./RandomWalk.d \
 ./Robot.d \
 ./Waypoint.d \

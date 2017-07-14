@@ -7,13 +7,13 @@
 
 #include "WaypointManager.h"
 #include "Waypoint.h"
-#include "Cell.h"
 #include "Map.h"
 #include "Graph.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "MatCell.h"
 
 using namespace std;
 WaypointManager::WaypointManager(vector<Cell> path, double gridResolution, double mapResolution)
